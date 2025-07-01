@@ -22,22 +22,37 @@ class JointGUI(QWidget):
         self.actions = self.load_actions()
 
         self.joint_map = {
-            "l_thumb_joint": "Left Thumb", "l_index_joint": "Left Index", "l_middle_joint": "Left Middle",
-            "l_ring_joint": "Left Ring", "l_pinky_joint": "Left Pinky",
-            "l_thumb_tip_joint": "Left Thumb Tip", "l_index_tip_joint": "Left Index Tip", "l_middle_tip_joint": "Left Middle Tip",
-            "l_ring_tip_joint": "Left Ring Tip", "l_pinky_tip_joint": "Left Pinky Tip",
-            "l_wrist_joint": "Left Wrist", "l_elbow_joint": "Left Elbow", "l_shoulder_joint": "Left Shoulder",
-            "neck_joint": "Neck", "head_joint": "Head",
-            "r_thumb_joint": "Right Thumb", "r_index_joint": "Right Index", "r_middle_joint": "Right Middle",
-            "r_ring_joint": "Right Ring", "r_pinky_joint": "Right Pinky",
-            "r_thumb_tip_joint": "Right Thumb Tip", "r_index_tip_joint": "Right Index Tip", "r_middle_tip_joint": "Right Middle Tip",
-            "r_ring_tip_joint": "Right Ring Tip", "r_pinky_tip_joint": "Right Pinky Tip",
-            "r_wrist_joint": "Right Wrist", "r_elbow_joint": "Right Elbow", "r_shoulder_joint": "Right Shoulder",
-        }
+    "eye_left_up_down": "Eye Left Up/Down",
+    "eye_left_left_right": "Eye Left Left/Right",
+    "eye_right_up_down": "Eye Right Up/Down",
+    "eye_right_left_right": "Eye Right Left/Right",
+    "nose": "Nose",
+    "jaw": "Jaw",
+    "eyelid_left_upper": "Left Upper Eyelid",
+    "eyelid_left_lower": "Left Lower Eyelid",
+    "eyelid_right_upper": "Right Upper Eyelid",
+    "eyelid_right_lower": "Right Lower Eyelid",
+    "eyebrow_left": "Left Eyebrow",
+    "eyebrow_right": "Right Eyebrow",
+    "cheek_left": "Left Cheek",
+    "cheek_right": "Right Cheek",
+    "left_lower_jaw": "Left Lower Jaw",
+    "right_lower_jaw": "Right Lower Jaw"
+}
 
-        self.left_joints = [k for k in self.joint_map if k.startswith("l_")]
-        self.center_joints = [k for k in self.joint_map if k.startswith("neck") or k.startswith("head")]
-        self.right_joints = [k for k in self.joint_map if k.startswith("r_")]
+
+        self.left_joints = [k for k in self.joint_map if any(k.startswith(prefix) for prefix in [
+    "eye_left_", "eyelid_left_", "eyebrow_left", "cheek_left", "left_lower_jaw"
+])]
+
+        self.right_joints = [k for k in self.joint_map if any(k.startswith(prefix) for prefix in [
+    "eye_right_", "eyelid_right_", "eyebrow_right", "cheek_right", "right_lower_jaw"
+])]
+
+        self.center_joints = [k for k in self.joint_map if k in [
+    "nose", "jaw"
+]]
+
 
         self.setStyleSheet("""
             QWidget {
